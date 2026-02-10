@@ -4,19 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ลงทะเบียนรับส่วนลด</title>
-  <style>
-    body { font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 420px; margin: 40px auto; padding: 0 16px; color: #222; }
-    h2 { text-align: center; margin-bottom: 8px; }
-    p { text-align: center; font-size: 14px; color: #555; }
-    .form-group { margin: 14px 0; }
-    label { display: block; font-size: 14px; margin-bottom: 4px; }
-    input { width: 100%; padding: 10px 12px; font-size: 16px; border-radius: 8px; border: 1.5px solid #ddd; box-sizing: border-box; }
-    input:focus { border-color: #339733; outline: none; }
-    button { width: 100%; padding: 12px; margin-top: 12px; font-size: 16px; border-radius: 8px; border: none; cursor: pointer; background: #00b900; color: #fff; }
-    button:disabled { opacity: 0.7; cursor: default; }
-    #message { margin-top: 10px; font-size: 14px; text-align: center; }
-  </style>
+  <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
   <h2>ลงทะเบียนรับส่วนลด</h2>
   <p>กรอกข้อมูลให้ครบ และโชว์หน้าจอไลน์ให้ทางร้านค้าได้ดู เพื่อรับส่วนลด</p>
@@ -29,13 +19,15 @@
 
     <div class="form-group">
       <label for="phone">เบอร์โทร</label>
-      <input type="tel" id="phone" required pattern="[0-9]{9,10}" placeholder="เช่น 0812345678">
+      <input type="tel" id="phone" required pattern="[0-9]{9,10}" placeholder=" ">
     </div>
 
     <div class="form-group">
       <label for="shop">ร้านที่คุณได้โค้ดนี้มา</label>
       <input type="text" id="shop" required placeholder=" ">
     </div>
+
+    <br>
 
     <button type="submit" id="submitBtn">ยืนยัน</button>
   </form>
