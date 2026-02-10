@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ลงทะเบียนก่อนเข้ากลุ่มไลน์</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      max-width: 420px;
+      margin: 40px auto;
+      padding: 0 16px;
+      color: #222;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    p {
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+    }
+    .form-group {
+      margin: 14px 0;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1.5px solid #ddd;
+      box-sizing: border-box;
+    }
+    input:focus {
+      border-color: #00b900;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: #00b900;
+      color: #fff;
+    }
+    button:disabled {
+      opacity: 0.7;
+      cursor: default;
+    }
+    #message {
+      margin-top: 10px;
+      font-size: 14px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h2>ลงทะเบียนก่อนเข้ากลุ่มไลน์</h2>
+  <p>กรอกข้อมูลให้ครบ แล้วระบบจะพาคุณไปเข้ากลุ่มไลน์อัตโนมัติ</p>
+
+  <form id="regForm">
+    <div class="form-group">
+      <label for="name">ชื่อ-นามสกุล</label>
+      <input type="text" id="name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">เบอร์โทร</label>
+      <input type="tel" id="phone" required pattern="[0-9]{9,10}" placeholder="เช่น 0812345678">
+    </div>
+
+    <div class="form-group">
+      <label for="shop">ร้านที่คุณได้โค้ดนี้มา</label>
+      <input type="text" id="shop" required placeholder="เช่น ร้าน A, ร้าน B">
+    </div>
+
+    <button type="submit" id="submitBtn">ยืนยันและเข้ากลุ่มไลน์</button>
+  </form>
+
+  <div id="message"></div>
+
+  <script>
+    // TODO: เปลี่ยนตรงนี้ให้เป็น Web App URL ของ Apps Script คุณ
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9pMZkgCVDkBSUTG4YTL3plOAR3BGRdzpVog_HUqRaFrBEj-xABLaeR2QxZROtBGFo/exec';
+
+    // ลิงก์กลุ่มไลน์ที่คุณให้มา
+    const LINE_GROUP_URL = 'https://line.me/ti/g2/_7aojWy1vTv-RzoidGqv9BlNiyJLhHkdLRQyCQ?utm_source=invitation&utm_medium=link_copy&utm_campaign=default';
+
+    const form = document.getElementById('regForm');
+    const btn = document.getElementById('submitBtn');
+    const msg = document.getElementById('message');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const payload = {
+        name: document.getElementById('name').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        shop: document.getElementById('shop').value.trim()
+      };
+
+      if (!payload.name || !payload.phone || !payload.shop) {
+        msg.textContent = 'กรุณากรอกข้อมูลให้ครบทุกช่อง';
+        msg.style.color = 'red';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'กำลังบันทึก...';
+      msg.textContent = '';
+
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await res.json();
+
+        if (result.success) {
+          // บันทึกสำเร็จ → ส่งไปกลุ่มไลน์
+          window.location.href = LINE_GROUP_URL;
+        } else {
+          msg.textContent = 'บันทึกไม่สำเร็จ: ' + (result.error || '');
+          msg.style.color = 'red';
+          btn.disabled = false;
+          btn.textContent = 'ยืนยันและเข้ากลุ่มไลน์';
+        }
+      } catch (err) {
+        msg.textContent = 'เกิดข้อผิดพลาดในการเชื่อมต่อ ลองใหม่อีกครั้ง';
+        msg.style.color = 'red';
+        btn.disabled = false;
+        btn.textContent = 'ยืนยันและเข้ากลุ่มไลน์';
+      }
+    });
+  </script>
+</body>
+</html>
