@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ลงทะเบียนก่อนเข้ากลุ่มไลน์</title>
+  <title>ลงทะเบียนรับส่วนลด</title>
   <style>
     body { font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 420px; margin: 40px auto; padding: 0 16px; color: #222; }
     h2 { text-align: center; margin-bottom: 8px; }
@@ -11,15 +11,15 @@
     .form-group { margin: 14px 0; }
     label { display: block; font-size: 14px; margin-bottom: 4px; }
     input { width: 100%; padding: 10px 12px; font-size: 16px; border-radius: 8px; border: 1.5px solid #ddd; box-sizing: border-box; }
-    input:focus { border-color: #00b900; outline: none; }
+    input:focus { border-color: #339733; outline: none; }
     button { width: 100%; padding: 12px; margin-top: 12px; font-size: 16px; border-radius: 8px; border: none; cursor: pointer; background: #00b900; color: #fff; }
     button:disabled { opacity: 0.7; cursor: default; }
     #message { margin-top: 10px; font-size: 14px; text-align: center; }
   </style>
 </head>
 <body>
-  <h2>ลงทะเบียนก่อนเข้ากลุ่มไลน์</h2>
-  <p>กรอกข้อมูลให้ครบ แล้วระบบจะพาคุณไปเข้ากลุ่มไลน์อัตโนมัติ</p>
+  <h2>ลงทะเบียนรับส่วนลด</h2>
+  <p>กรอกข้อมูลให้ครบ และโชว์หน้าจอไลน์ให้ทางร้านค้าได้ดู เพื่อรับส่วนลด</p>
 
   <form id="regForm">
     <div class="form-group">
@@ -34,10 +34,10 @@
 
     <div class="form-group">
       <label for="shop">ร้านที่คุณได้โค้ดนี้มา</label>
-      <input type="text" id="shop" required placeholder="เช่น ร้าน A, ร้าน B">
+      <input type="text" id="shop" required placeholder=" ">
     </div>
 
-    <button type="submit" id="submitBtn">ยืนยันและเข้ากลุ่มไลน์</button>
+    <button type="submit" id="submitBtn">ยืนยัน</button>
   </form>
 
   <div id="message"></div>
@@ -76,7 +76,7 @@
 
         // ในโหมด no-cors เราจะอ่านค่า success ไม่ได้
         // แต่ถ้าส่งสำเร็จและไม่มี Error มันจะรันมาถึงบรรทัดนี้
-        msg.textContent = 'บันทึกสำเร็จ! กำลังพาคุณไปที่กลุ่มไลน์...';
+        msg.textContent = 'บันทึกสำเร็จ! กำลังพาคุณไปที่ไลน์...';
         msg.style.color = '#00b900';
 
         setTimeout(() => {
